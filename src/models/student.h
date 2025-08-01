@@ -4,6 +4,7 @@
 #include <QString>
 
 struct Student {
+
     QString studentId;
     QString firstName;
     QString lastName;
