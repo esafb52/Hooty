@@ -15,6 +15,7 @@
 #include <QIcon>
 #include <QFont>
 #include <QMessageBox>
+#include <QHeaderView>
 
 
 
@@ -75,6 +76,7 @@ MainWindow::MainWindow( QWidget *parent)
     tbl = new QTableView(this);
     tbl->setFont(QFont("0 Nazanin Bold", 11, QFont::Bold));
     tbl->setShowGrid(true);
+    tbl->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 
     middleLayout->addWidget(tbl);
@@ -115,5 +117,22 @@ void MainWindow::loadData()
     m_model = m_repository.GetStduents();
     tbl->setModel(m_model.get());
     tbl->show();
+
+    changeQTableViewUi(tbl);
     tbl->scrollToTop();
+}
+
+void MainWindow::changeQTableViewUi(QTableView *table)
+{
+    table->setColumnWidth(0, 150);
+    table->setColumnWidth(1, 200);
+    table->setColumnWidth(2, 300);
+    table->setColumnWidth(3, 200);
+    table->setColumnWidth(4, 200);
+    table->setSelectionBehavior(QAbstractItemView::SelectItems);
+}
+
+void MainWindow::changeQSqlQueryModelHeaeder(QSqlQueryModel *model)
+{
+
 }

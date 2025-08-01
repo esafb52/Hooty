@@ -19,6 +19,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     void loadData();
+    void changeQTableViewUi(QTableView* tbl);
+    void changeQSqlQueryModelHeaeder(QSqlQueryModel * model);
 
 private:
     QLineEdit *lineEdit;
@@ -28,6 +30,7 @@ private:
     QPushButton *pushButtonSetDb;
     studentrepository m_repository;
     QSharedPointer<QSqlQueryModel> m_model;
+
 
 };
 
