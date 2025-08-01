@@ -2,18 +2,23 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "data/studentrepository.h"
+
 
 class QLineEdit;
 class QPushButton;
 class QTableView;
 class QComboBox;
 
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
+    void loadData();
 
 private:
     QLineEdit *lineEdit;
@@ -21,6 +26,9 @@ private:
     QTableView *tbl;
     QComboBox *comboBoxDb;
     QPushButton *pushButtonSetDb;
+    studentrepository m_repository;
+    QSharedPointer<QSqlQueryModel> m_model;
+
 };
 
 #endif // MAINWINDOW_H

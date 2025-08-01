@@ -1,19 +1,35 @@
 #ifndef STUDENTREPOSITORY_H
 #define STUDENTREPOSITORY_H
 
-#include <QList>
+#include "istudentquery.h"
 
-struct Student;
-struct StudentHistory;
+#include <QSharedPointer>
+#include <QSqlDatabase>
+#include <QSqlQueryModel>
 
-class studentrepository
-{
+class studentrepository {
 public:
-    studentrepository();
-    QList<Student> GetStduents(QString &lastname,QString &stdentId);
-    QList<StudentHistory> GetStduentHistory(QString &stdentId);
+    explicit studentrepository();
+    QSharedPointer<QSqlQueryModel> GetStduents();
+    QSharedPointer<QSqlQueryModel> GetStduents(QString &lastname,
+                                               QString &stdentId);
+    QSharedPointer<QSqlQueryModel> GetStduentHistory(QString &stdentId);
+
     int GetStduentsHistoryCount();
-    ~studentrepository() = default;
+    void init(const QString &dbName);
+    bool openDatabase();
+    void closeDatabase();
+
+    ~studentrepository();
+
+private:
+    std::unique_ptr<IStudentQuery> m_queryBuilder;
+    QSqlDatabase m_db;
+    const QString m_server_name = ".\\SQLEXPRESS";
+    const QString m_sqlDriver = "QODBC";
+    const QString m_connectionStr = QString("DRIVER={SQL Server};"
+                                            "SERVER=%1;Database=%2;"
+                                            "Trusted_Connection=Yes;");
 };
 
 #endif // STUDENTREPOSITORY_H

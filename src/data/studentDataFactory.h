@@ -2,7 +2,7 @@
 #define STUDENTDATAFACTORY_H
 
 #include "istudentquery.h"
-#include "dbhelper.h"
+
 #include "danastudentquery.h"
 
 
@@ -11,25 +11,14 @@ class StudenDataFactory
 {
 
 public:
-    std::unique_ptr<IStudentQuery> create(const QString& dbType)
+    std::unique_ptr<IStudentQuery> create(const QString& dbName)
     {
-
-        const auto type=DbHelper::detectDbType(dbType);
-
-        switch (type) {
-        case DbHelper::DbType::Dana :
-            return std::make_unique<DanaStudentQuery>();
-        case DbHelper::Dip :
-            return std::make_unique<DanaStudentQuery>();
-        case DbHelper::Rah  :
-            return std::make_unique<DanaStudentQuery>();
-        case DbHelper::Tos  :
-            return std::make_unique<DanaStudentQuery>();
-        case DbHelper::Master :
-            return std::make_unique<DanaStudentQuery>();
-        }
+        if (dbName.startsWith("Dana", Qt::CaseInsensitive) == 0) return std::make_unique<DanaStudentQuery>();
+        if (dbName.startsWith("Dip", Qt::CaseInsensitive) == 0)  return std::make_unique<DanaStudentQuery>();
+        if (dbName.startsWith("Rah", Qt::CaseInsensitive) == 0)  return std::make_unique<DanaStudentQuery>();
+        if (dbName.startsWith("Tos", Qt::CaseInsensitive) == 0) return std::make_unique<DanaStudentQuery>();
+        return std::make_unique<DanaStudentQuery>();
     }
-
 
 };
 

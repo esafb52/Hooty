@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -13,9 +14,13 @@
 #include <QSpacerItem>
 #include <QIcon>
 #include <QFont>
+#include <QMessageBox>
 
-MainWindow::MainWindow(QWidget *parent)
+
+
+MainWindow::MainWindow( QWidget *parent)
     : QMainWindow(parent)
+
 {
     setGeometry(0, 0, 1109, 455);
     setWindowTitle("همیار هوتی");
@@ -69,6 +74,9 @@ MainWindow::MainWindow(QWidget *parent)
     // --- Table View ---
     tbl = new QTableView(this);
     tbl->setFont(QFont("0 Nazanin Bold", 11, QFont::Bold));
+    tbl->setShowGrid(true);
+
+
     middleLayout->addWidget(tbl);
 
     // --- GroupBox for Database Selection ---
@@ -87,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
     pushButtonSetDb = new QPushButton("ثبت", this);
     pushButtonSetDb->setMinimumWidth(110);
     pushButtonSetDb->setMaximumWidth(110);
-      pushButtonSetDb->setMinimumHeight(30);
+    pushButtonSetDb->setMinimumHeight(30);
     pushButtonSetDb->setFont(QFont("0 Nazanin Bold", 11, QFont::Bold));
 
     QSpacerItem *dbSpacer = new QSpacerItem(40, 20, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
@@ -98,4 +106,14 @@ MainWindow::MainWindow(QWidget *parent)
     groupBox2Layout->addLayout(dbLayout);
     middleLayout->addWidget(groupBox2);
     setCentralWidget(centralWidget);
+    m_repository.init("Dana5011");
+    loadData();
+}
+
+void MainWindow::loadData()
+{
+    m_model = m_repository.GetStduents();
+    tbl->setModel(m_model.get());
+    tbl->show();
+    tbl->scrollToTop();
 }

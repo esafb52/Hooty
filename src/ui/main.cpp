@@ -1,13 +1,11 @@
-// #include "mainwindow.h"
-#include "studentdetails.h"
-
+#include "mainwindow.h"
 #include <QApplication>
 
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    StudentDetails app;
-     app.show();
+    MainWindow app;
+    app.showMaximized();
     return a.exec();
 }
